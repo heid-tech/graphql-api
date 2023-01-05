@@ -1,0 +1,18 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  cache.graphqlapi_entitycache:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['graphqlapi_entitycache']
+
+  Heidtech\GraphqlApi\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  Heidtech\GraphqlApi\Middleware\GraphqlApiMiddleware:
+    arguments:
+      $cache: '@cache.graphqlapi_entitycache'
